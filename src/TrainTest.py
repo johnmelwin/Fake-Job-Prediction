@@ -4,7 +4,7 @@ import pandas as pd
 from sklearn.metrics import classification_report
 from Model import my_model
 sys.path.insert(0, '../..')
-from project.MyEvaluation import my_evaluation
+from src.MyEvaluation import my_evaluation
 
 def test(data):
     y = data["fraudulent"]
