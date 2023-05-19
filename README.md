@@ -1,6 +1,6 @@
 # Fake Job Prediction using Machine learning and NLP
 
-🔍💼🕵️‍♂️ This project aims to predict fake job postings using machine learning techniques and natural language processing (NLP). The project utilizes a dataset containing information about job postings, such as job titles, locations, descriptions, and requirements. By analyzing these textual features, the model predicts whether a job posting is fraudulent or genuine.
+💼 This project aims to predict fake job postings using machine learning techniques and natural language processing (NLP). The project utilizes a dataset containing information about job postings, such as job titles, locations, descriptions, and requirements. By analyzing these textual features, the model predicts whether a job posting is fraudulent or genuine.
 
 ## Project Description
 
