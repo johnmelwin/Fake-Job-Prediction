@@ -1,39 +1,92 @@
-# Fake Job Prediction using Machine learning and NLP
+# Fake Job Posting Detection Using NLP and Machine Learning
 
-💼 This project aims to predict fake job postings using machine learning techniques and natural language processing (NLP). The project utilizes a dataset containing information about job postings, such as job titles, locations, descriptions, and requirements. By analyzing these textual features, the model predicts whether a job posting is fraudulent or genuine.
+> Binary text classification pipeline that detects fraudulent job postings using TF-IDF feature extraction and a Passive-Aggressive Classifier, achieving 98% accuracy and 0.77 F1-score.
 
-## Project Description
+---
 
-The project consists of the following main components:
+## Overview
 
-- **TrainTest.py**: This script loads the dataset, preprocesses the data, splits it into training and testing sets, trains the model, and evaluates its performance using classification metrics. The script uses the `my_model` class from the `Model.py` module.
+Online job platforms are increasingly targeted by fraudulent postings that exploit job seekers. This project builds a machine learning pipeline to automatically classify job postings as **genuine** or **fraudulent** based on textual features (title, location, description, requirements).
 
-- **Model.py**: This module contains the `my_model` class, which implements the machine learning model for fake job prediction. The class includes methods for data preprocessing, feature engineering, model training, and prediction.
-
-- **MyEvaluation.py**: This module provides evaluation functions for assessing the performance of the model. The `my_evaluation` class is used in `TrainTest.py` to calculate classification metrics such as F1 score.
-
-## Getting Started
-
-To get started with the project, follow these steps:
-
-1. Install the required dependencies mentioned in the project code.
-
-2. Download the dataset file `job_train.csv` and place it in the `data` folder.
-
-3. Open the project in an environment with Python installed (preferably Python 3).
-
-4. Run the `TrainTest.py` script. This script will load the dataset, preprocess the data, train the model, and evaluate its performance.
+**Problem type**: Binary text classification (fraudulent = 1, genuine = 0)
 
 ## Results
 
-After running the `TrainTest.py` script, the model achieved impressive results:
+| Metric | Score |
+|--------|-------|
+| **Accuracy** | 98% |
+| **F1-Score** (fraudulent class) | 0.77 |
 
-- The model achieved an accuracy of 98% ✅, indicating that it correctly classified the job postings as genuine or fraudulent with high precision.
+## Methodology
 
-- The F1 score, a metric that combines precision and recall, was 0.77 💪. This score demonstrates the model's ability to find a balance between identifying fraudulent job postings (class 1) and correctly classifying genuine ones (class 0).
+```
+Raw CSV → Text Preprocessing → TF-IDF Vectorization → Passive-Aggressive Classifier → Evaluation
+```
 
-🚀 These results highlight the effectiveness of the machine learning model and its capability to accurately predict fake job postings using the provided dataset.
+### 1. Text Preprocessing (`src/model.py`)
+- Combine title, location, description, and requirements into a single text field
+- Convert to lowercase
+- Remove stopwords (via Gensim), URLs, punctuation, numbers, and non-English characters
+- Handle missing values with placeholder strings
 
-## Contributing
+### 2. Feature Engineering
+- **TF-IDF Vectorization** with a vocabulary of 6,500 features
+- Encoding: UTF-8 with error replacement
 
-🤝 Contributions to this project are welcome. If you have any suggestions or improvements, please submit a pull request or open an issue. Let's work together to make this project even better!
+### 3. Class Balancing (optional)
+- Minority class up-sampling using `sklearn.utils.resample`
+- Configurable sampling ratio (disabled by default)
+
+### 4. Model Training
+- **Passive-Aggressive Classifier** with squared hinge loss
+- Well-suited for large-scale text classification problems
+- Trained on 80% of the data, tested on the remaining 20%
+
+### 5. Evaluation (`src/evaluation.py`)
+Custom evaluation class implementing from scratch:
+- Confusion matrix computation
+- Precision, Recall, F1-Score (macro, micro, weighted averages)
+- AUC-ROC curve computation
+- Also validated using `sklearn.metrics.classification_report`
+
+## Project Structure
+
+```
+├── data/
+│   └── job_train.csv          # Job posting dataset with labels
+│
+├── src/
+│   ├── model.py               # ML pipeline: preprocessing, TF-IDF, PAC classifier
+│   ├── evaluation.py          # Custom metrics: confusion matrix, precision, recall, F1, AUC
+│   └── train.py               # Entry point: data loading, train/test split, evaluation
+│
+├── .gitignore
+└── README.md
+```
+
+## Tech Stack
+
+- **Language**: Python 3
+- **ML**: scikit-learn (TF-IDF, Passive-Aggressive Classifier)
+- **NLP**: Gensim (stopword removal)
+- **Data**: pandas, NumPy
+
+## Getting Started
+
+1. Clone the repository
+   ```bash
+   git clone https://github.com/johnmelwin/Fake-Job-Prediction.git
+   cd Fake-Job-Prediction
+   ```
+
+2. Install dependencies
+   ```bash
+   pip install pandas scikit-learn gensim numpy
+   ```
+
+3. Run the pipeline
+   ```bash
+   cd src
+   python train.py
+   ```
+   This loads the dataset, trains the model, and prints the classification report with F1 score and runtime.

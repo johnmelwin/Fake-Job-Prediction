@@ -1,17 +1,10 @@
-#DSCI-633 FALL-22 PROJECT SUBMISSION BY JOHN MELWIN RICHARD
 import pandas as pd
 import gensim
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.linear_model import PassiveAggressiveClassifier
-from sklearn.linear_model import SGDClassifier
 from sklearn.utils import shuffle
 from sklearn.utils import resample
 import warnings
-import sys
-
-##################################
-sys.path.insert(0, '../..')
-##################################
 pd.set_option('display.max_rows', 500)
 pd.set_option('display.max_columns', 500)
 pd.options.display.max_colwidth = 100
